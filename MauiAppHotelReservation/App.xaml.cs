@@ -6,7 +6,7 @@
         {
             InitializeComponent();
 
-            MainPage = new Login();
+            MainPage = new NavigationPage(new Views.ContratacaoHospedagem());
         }
 
         //Preparando a janela de nosso projeto
