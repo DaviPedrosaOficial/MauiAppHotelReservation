@@ -1,0 +1,23 @@
+﻿namespace MauiAppHotelReservation
+{
+    public partial class App : Application
+    {
+        public App()
+        {
+            InitializeComponent();
+
+            MainPage = new Login();
+        }
+
+        //Preparando a janela de nosso projeto
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            var window = base.CreateWindow(activationState);
+
+            window.Width = 400;
+            window.Height = 600;
+
+            return window;
+        }
+    }
+}

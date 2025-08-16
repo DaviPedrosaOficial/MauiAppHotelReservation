@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppLogin.Cadastro"
+             Title="Cadastro">
+    <ContentPage.Background>
+        <LinearGradientBrush>
+            <GradientStop Color="#F5DEB3" Offset="0.2"/>
+            <GradientStop Color="#B8860B" Offset="0.9"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <VerticalStackLayout VerticalOptions="Center"
+                         Margin="20"
+                         Spacing="10">
+        <Label 
+            Text="Cadastro"
+            HorizontalOptions="Center"
+            FontSize="Large"
+            Margin="30"/>
+
+        <Label 
+            Text="Usuário:"
+            HorizontalTextAlignment="Start"/>
+        <Entry x:Name="txt_usuario_cadastro"/>
+
+        <Label
+            Text="Senha:"
+            HorizontalOptions="Start"/>
+        <Entry x:Name="txt_senha_cadastro" IsPassword="True"/>
+
+        <Label
+            Text="Confirmação de senha:"
+            HorizontalOptions="Start"/>
+        <Entry x:Name="txt_confirma_senha_cadastro" IsPassword="True"/>
+
+        <Button 
+            x:Name="btn_cadastro_cadastro"
+            Text="Cadastrar-se"
+            BackgroundColor="#d2691e"
+            Clicked="btn_cadastro_cadastro_Clicked"/>
+    </VerticalStackLayout>
+</ContentPage>

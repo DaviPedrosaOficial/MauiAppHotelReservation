@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppHotelReservation.Login"
+             Title="Login">
+    <ContentPage.Background>
+        <LinearGradientBrush>
+            <GradientStop Color="#F5DEB3" Offset="0.2"/>
+            <GradientStop Color="#B8860B" Offset="0.9"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+    
+    <VerticalStackLayout VerticalOptions="Center"
+                         Margin="10"
+                         Spacing="10">
+        
+        <Label 
+            Text="Hostel Application" 
+            HorizontalOptions="Center" 
+            FontSize="Large"
+            FontFamily="LavishlyYoursRegular"/>
+
+        <Label
+            Text="Usuario:"/>
+        <Entry x:Name="txt_usuario_login"/>
+
+        <Label
+            Text="Senha"/>
+        <Entry x:Name="txt_senha_login" IsPassword="True"/>
+
+        <Button x:Name="btn_login"
+                Text="Login"
+                BackgroundColor="#d2691e"
+                Clicked="btn_login_Clicked"/>
+
+        <Label
+            Text="Ainda não se cadastrou?"
+            HorizontalTextAlignment="Center"/>
+
+        <Button x:Name="btn_cadastro"
+                Text="Cadastrar-me"
+                BackgroundColor="#d2691e"
+                Clicked="btn_cadastro_Clicked"/>
+    </VerticalStackLayout>
+</ContentPage>
