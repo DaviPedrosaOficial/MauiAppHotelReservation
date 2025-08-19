@@ -6,4 +6,9 @@ public partial class ContratacaoHospedagem : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void btn_avancar_Clicked(System.Object sender, System.EventArgs e)
+    {
+
+    }
 }

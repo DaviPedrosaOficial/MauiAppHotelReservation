@@ -12,25 +12,114 @@
         </LinearGradientBrush>
     </ContentPage.Background>
 
-    <VerticalStackLayout VerticalOptions="Center"
-                         Padding="10"
-                         Spacing="15">
-        
-        <Label 
-            Text="Bem Vindo(a) ao: "
-            FontSize="Large"
-            HorizontalOptions="Center" />
+    <ScrollView>
+        <VerticalStackLayout VerticalOptions="Center"
+                             Padding="10"
+                             Spacing="15">
+            
+            <Label 
+                Text="Bem Vindo(a) ao: "
+                FontSize="Large"
+                HorizontalOptions="Center" />
 
-        <Label
-            Text="Calculo diaria"
-            FontSize="Title"
-            HorizontalTextAlignment="Center"/>
+            <Label
+                Text="Cálculo da Diária"
+                FontSize="Title"
+                HorizontalTextAlignment="Center"/>
 
-        <Frame>
-            <VerticalStackLayout>
-                
-            </VerticalStackLayout>
-        </Frame>
+            <Frame Padding="10">
+                <VerticalStackLayout Spacing="15"
+                                     Padding="10">
+                    <Grid RowDefinitions = "Auto,Auto"
+                          ColumnDefinitions= "*, *, 1.5*"
+                          RowSpacing="15">
 
-    </VerticalStackLayout>
+                        <!-- Labels de Nomes 1ª fileira -->
+                        <Label
+                            Grid.Row="0" Grid.Column="0"
+                            Text="Adultos:"/>
+                        <Label
+                            Grid.Row="1" Grid.Column="0"
+                            Text="Crianças:"/>
+
+
+                        <!-- Stepper e Label da primeira linha (adultos) -->
+                        <Label Grid.Row="0" Grid.Column="1"
+                               Text="{Binding Value}"
+                               BindingContext="{x:Reference stp_adultos}"
+                               Margin="50, 0, 25, 0"/>
+                        <Stepper 
+                            Grid.Row="0" Grid.Column="2"
+                            x:Name="stp_adultos"
+                            Minimum="1"
+                            Maximum="10"
+                            Increment="1"
+                            Margin="50, 0, 25, 0"/>
+
+                        <!-- Stepper e Label da segunda linha (crianças) -->
+                        <Label Grid.Row="1" Grid.Column="1"
+                               Text="{Binding Value}"
+                               BindingContext="{x:Reference stp_criancas}"
+                               Margin="50, 0, 25, 0"/>
+                        <Stepper 
+                            Grid.Row="1" Grid.Column="2"
+                            x:Name="stp_criancas"
+                            Minimum="1"
+                            Maximum="10"
+                            Increment="1"
+                            Margin="50, 0, 25, 0"/>
+                    </Grid>
+                    
+                    <!-- Layout do escolha sua suite (Label e Picker) -->
+                    <Label
+                        Text="Escolha uma suite"
+                        FontSize="Medium"
+                        HorizontalTextAlignment="Start"
+                        Margin="0, 20, 0, 0"/>
+                    <Picker
+                        x:Name="pck_quarto"
+                        Title="Selecione a sua Acomodação"/>
+
+                    <!-- Layout do Período de estadua -->
+                    <Frame Padding="15"
+                           Margin="10">
+                        <VerticalStackLayout Spacing="15">
+                            <Label
+                                Text="Período de estadia"
+                                FontSize="Medium"
+                                HorizontalTextAlignment="Center"/>
+                            <HorizontalStackLayout>
+                                <Label 
+                                    Text="Check-in:"
+                                    Margin="0,10"
+                                    FontSize="Small"/>
+                                <DatePicker
+                                    x:Name="dtpck_check_in"
+                                    Format="dd/MM/yyyy"
+                                    Margin="20,0,0,0"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label 
+                                    Text="Check-out:"
+                                    Margin="0,10"
+                                    FontSize="Small"/>
+                                <DatePicker
+                                    x:Name="dtpck_check_out"
+                                    Format="dd/MM/yyyy"
+                                    Margin="20,0,0,0"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Button
+                        x:Name="btn_avancar"
+                        Text="Avançar"
+                        BackgroundColor="#d2691e"
+                        Clicked="btn_avancar_Clicked"/>
+
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
