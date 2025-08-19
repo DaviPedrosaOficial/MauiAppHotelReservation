@@ -1,7 +1,37 @@
-﻿namespace MauiAppHotelReservation
+﻿using MauiAppHotelReservation.Models;
+
+namespace MauiAppHotelReservation
 {
     public partial class App : Application
     {
+        //Simulando um banco de dados com uma lista de quartos (Regra de negócio)
+        public List<Quarto> lista_quartos = new List<Quarto>
+        {
+            new Quarto()
+            {
+                Descrição = "Suíte Presidencial",
+                ValorDiariaAdulto = 1250.0,
+                ValorDiariaCriança = 800.0
+            },
+            new Quarto()
+            {
+                Descrição = "Suíte de Luxo",
+                ValorDiariaAdulto = 850.0,
+                ValorDiariaCriança = 450
+            },
+            new Quarto()
+            {
+                Descrição = "Flat",
+                ValorDiariaAdulto = 350.0,
+                ValorDiariaCriança = 120
+            },
+            new Quarto()
+            {
+                Descrição = "Suíte Single",
+                ValorDiariaAdulto = 150.0
+            }
+        };
+
         public App()
         {
             InitializeComponent();

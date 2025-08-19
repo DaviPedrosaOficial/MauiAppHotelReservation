@@ -15,7 +15,8 @@
     <ScrollView>
         <VerticalStackLayout VerticalOptions="Center"
                              Padding="10"
-                             Spacing="15">
+                             Spacing="15"
+                             Margin="10, 50">
             
             <Label 
                 Text="Bem Vindo(a) ao: "
@@ -78,9 +79,10 @@
                         Margin="0, 20, 0, 0"/>
                     <Picker
                         x:Name="pck_quarto"
-                        Title="Selecione a sua Acomodação"/>
+                        Title="Selecione a sua Acomodação"
+                        ItemDisplayBinding="{Binding Descrição}"/>
 
-                    <!-- Layout do Período de estadua -->
+                    <!-- Layout do Período de estadia -->
                     <Frame Padding="15"
                            Margin="10">
                         <VerticalStackLayout Spacing="15">
@@ -95,6 +97,7 @@
                                     FontSize="Small"/>
                                 <DatePicker
                                     x:Name="dtpck_check_in"
+                                    DateSelected="dtpck_check_in_DateSelected"
                                     Format="dd/MM/yyyy"
                                     Margin="20,0,0,0"/>
                             </HorizontalStackLayout>
