@@ -9,6 +9,17 @@ public partial class ContratacaoHospedagem : ContentPage
 
     private void btn_avancar_Clicked(System.Object sender, System.EventArgs e)
     {
-
+		try
+		{
+			//
+			Navigation.PushAsync(new Views.HospedagemContratada());
+        
+		} 
+		catch (Exception ex) 
+		{
+            // Exibe uma mensagem de erro caso ocorra uma exceção
+            DisplayAlert("Erro", ex.Message, "OK");
+        
+		}
     }
 }

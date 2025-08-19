@@ -6,4 +6,9 @@ public partial class HospedagemContratada : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void btn_confirma_reserva_Clicked(System.Object sender, System.EventArgs e)
+    {
+
+    }
 }

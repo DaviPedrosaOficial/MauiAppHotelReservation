@@ -2,11 +2,98 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppHotelReservation.Views.HospedagemContratada"
-             Title="HospedagemContratada">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="HospedagemContratada"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Background>
+        <LinearGradientBrush>
+            <GradientStop Color="#F5DEB3" Offset="0.2"/>
+            <GradientStop Color="#B8860B" Offset="0.9"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ScrollView>
+        <VerticalStackLayout VerticalOptions="Center"
+                             Spacing="10"
+                             Margin="10, 50">
+            <Label 
+                Text="Suite Presidencial"
+                HorizontalOptions="Center"
+                FontSize="Header"
+                FontFamily="LavishlyYoursRegular"
+                Margin="0,0,0,25"
+                Padding="0,0,0,25"/>
+
+            <!-- Grid de Hospedes -->
+            <Frame Margin="10, 0">
+                <VerticalStackLayout>
+                    <Label
+                        Text="Hospedes"
+                        HorizontalTextAlignment="Center"
+                        Padding="0, 0, 0, 20"/>
+                    <Grid ColumnDefinitions="*, *">
+                        <Label
+                            Text="Adultos:"
+                            HorizontalTextAlignment="Center"/>
+                        <Label
+                            Text="Crianças:"
+                            HorizontalTextAlignment="Center"
+                            Grid.Column="1"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Grid de Check-in & Check-out -->
+            <Frame Margin="10, 5">
+                <VerticalStackLayout>
+                    <Grid RowDefinitions="Auto, Auto"
+                          ColumnDefinitions="*, *, *"
+                          RowSpacing="10">
+                        <Label
+                            Text="Check-In:"
+                            HorizontalTextAlignment="Center"/>
+                        <Label
+                            Text="Check-out:"
+                            Grid.Column="1"
+                            HorizontalTextAlignment="Center"/>
+                        <Label
+                            Text="Estadia: "
+                            Grid.Column="2"
+                            HorizontalTextAlignment="Center"/>
+
+                        <Label
+                            Text="26/10/1999"
+                            Grid.Row="1"
+                            HorizontalTextAlignment="Center"/>
+                        <Label
+                            Text="29/10/1999"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalTextAlignment="Center"/>
+                        <Label
+                            Text="3"
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            HorizontalTextAlignment="Center"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Grid valor total -->
+            <Frame Margin="10, 5">
+                <VerticalStackLayout>
+                    <Label
+                       Text="Valor total da Reserva: R$ 1750,00"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Botão de confirmação -->
+            <Button
+                x:Name="btn_confirma_reserva"
+                Text="Confirmar reserva"
+                Margin="10, 5"
+                BackgroundColor="#d2691e"
+                Clicked="btn_confirma_reserva_Clicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
