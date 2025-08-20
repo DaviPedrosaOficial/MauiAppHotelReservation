@@ -35,6 +35,13 @@ public partial class ContratacaoHospedagem : ContentPage
     {
 		try
 		{
+            if (pck_quarto.SelectedItem == null)
+            {
+                // Exibe um alerta se nenhum quarto foi selecionado
+                await DisplayAlert("Erro!", "O quarto não foi selcionado!", "OK");
+                return;
+            }
+
             Hospedagem hospedagem = new Hospedagem 
             {
                 // Obtém o quarto selecionado no Picker e converte para o tipo Quarto

@@ -1,8 +1,6 @@
-using MauiAppHotelReservation;
 using MauiAppHotelReservation.Services;
-using MauiAppLogin.Services;
 
-namespace MauiAppLogin;
+namespace MauiAppHotelReservation.Views.Login;
 
 public partial class Cadastro : ContentPage
 {
@@ -50,7 +48,7 @@ public partial class Cadastro : ContentPage
                 await SecureStorage.SetAsync("usuario_logado", novo_usuario.Usuario);
 
                 // Redirecionando para a página protegida
-                App.Current.MainPage = new MainPage();
+                Application.Current.MainPage = new MainPage();
             }
 
         }

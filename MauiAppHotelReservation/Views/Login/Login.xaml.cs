@@ -1,8 +1,6 @@
 using MauiAppHotelReservation.Services;
-using MauiAppLogin;
-using MauiAppLogin.Services;
 
-namespace MauiAppHotelReservation;
+namespace MauiAppHotelReservation.Views.Login;
 
 public partial class Login : ContentPage
 {
@@ -46,8 +44,8 @@ public partial class Login : ContentPage
         };
     }
 
-    private void btn_cadastro_Clicked(object sender, EventArgs e)
+    private async void btn_cadastro_Clicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new Cadastro(); // Navegando para a página de cadastro de usuário
+        await Navigation.PushAsync(new Views.Login.Cadastro()); // Navegando para a página de cadastro de usuário
     }
 }

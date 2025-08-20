@@ -74,22 +74,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\Cadastro.xaml.cs">
-	    <DependentUpon>Cadastro.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="Views\ContratacaoHospedagem.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\HospedagemContratada.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Login.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Cadastro.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

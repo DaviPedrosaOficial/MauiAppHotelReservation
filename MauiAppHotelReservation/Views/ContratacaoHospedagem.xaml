@@ -16,16 +16,16 @@
         <VerticalStackLayout VerticalOptions="Center"
                              Padding="10"
                              Spacing="15"
-                             Margin="10, 50">
+                             Margin="10, 20, 10, 50">
             
             <Label 
-                Text="Bem Vindo(a) ao: "
-                FontSize="Large"
+                Text="Bem Vindo(a) Hotel Dreams "
+                FontSize="Title"
                 HorizontalOptions="Center" />
 
             <Label
-                Text="Cálculo da Diária"
-                FontSize="Title"
+                Text="Escolha sua estadia"
+                FontSize="Subtitle"
                 HorizontalTextAlignment="Center"/>
 
             <Frame Padding="10">
@@ -74,8 +74,8 @@
                     <!-- Layout do escolha sua suite (Label e Picker) -->
                     <Label
                         Text="Escolha uma suite"
-                        FontSize="Medium"
-                        HorizontalTextAlignment="Start"
+                        FontSize="Subtitle"
+                        HorizontalTextAlignment="Center"
                         Margin="0, 20, 0, 0"/>
                     <Picker
                         x:Name="pck_quarto"

@@ -1,6 +1,4 @@
-﻿using MauiAppHotelReservation.Services;
-
-namespace MauiAppLogin.Services
+﻿namespace MauiAppHotelReservation.Services
 {
     public class UsuarioService
     {

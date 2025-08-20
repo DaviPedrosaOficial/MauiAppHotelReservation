@@ -36,7 +36,7 @@ namespace MauiAppHotelReservation
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new Views.ContratacaoHospedagem());
+            MainPage = new NavigationPage(new Views.Login.Login());
         }
 
         //Preparando a janela de nosso projeto
