@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiAppHotelReservation.MainPage">
+             x:Class="MauiAppHotelReservation.MainPage"
+             NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Background>
         <LinearGradientBrush>
@@ -25,18 +26,21 @@
             <Button
                 x:Name="btn_reservas"
                 Text="Minhas Reservas"
-                HeightRequest="60"/>
+                HeightRequest="60"
+                Clicked="btn_reservas_Clicked"/>
             <Button
                 x:Name="btn_reservar"
                 Text="Reservar estádia"
-                HeightRequest="60"/>
+                HeightRequest="60"
+                Clicked="btn_reservar_Clicked"/>
             <Button
-                x:Name="btn_fechar_app"
-                Text="Fechar App"
+                x:Name="btn_deslogar"
+                Text="Desconectar"
                 Margin="0,50"
                 HeightRequest="50"
                 WidthRequest="150"
-                HorizontalOptions="Center"/>
+                HorizontalOptions="Center"
+                Clicked="btn_deslogar_Clicked"/>
 
         </VerticalStackLayout>
     </ScrollView>

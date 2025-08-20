@@ -1,4 +1,4 @@
-namespace MauiAppHotelReservation.Views;
+namespace MauiAppHotelReservation.Views.Hotel;
 
 public partial class HospedagemContratada : ContentPage
 {

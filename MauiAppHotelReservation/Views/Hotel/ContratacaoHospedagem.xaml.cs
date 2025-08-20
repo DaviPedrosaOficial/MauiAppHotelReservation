@@ -1,6 +1,6 @@
 using MauiAppHotelReservation.Models;
 
-namespace MauiAppHotelReservation.Views;
+namespace MauiAppHotelReservation.Views.Hotel;
 
 public partial class ContratacaoHospedagem : ContentPage
 {
@@ -61,7 +61,7 @@ public partial class ContratacaoHospedagem : ContentPage
             };
 
             // Cria uma nova instância do modelo Hospedagem e preenche com os dados do formulário
-           await Navigation.PushAsync(new Views.HospedagemContratada() 
+           await Navigation.PushAsync(new Views.Hotel.HospedagemContratada() 
            {
                // Passa a hospedagem criada para a próxima página (HospedagemContratada.xaml)
                BindingContext = hospedagem

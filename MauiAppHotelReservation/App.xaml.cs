@@ -34,9 +34,28 @@ namespace MauiAppHotelReservation
 
         public App()
         {
+            // Inicializando os componentes da aplicação
             InitializeComponent();
 
-            MainPage = new NavigationPage(new Views.Login.Login());
+            // Inicializando o aplicativo e verificando se o usuário está logado
+            InitializeAppAsync();
+        }
+
+        // Método assíncrono para inicializar o aplicativo e verificar o status de login do usuário
+        private async void InitializeAppAsync()
+        {
+            var usuarioLogado = await SecureStorage.GetAsync("usuario_logado");
+
+            if (!string.IsNullOrEmpty(usuarioLogado))
+            {
+                // Se o usuário estiver logado, define a página principal como MainPage
+                MainPage = new NavigationPage(new MainPage());
+            }
+            else
+            {
+                // Se o usuário não estiver logado, define a página principal como a página de login
+                MainPage = new NavigationPage(new Views.Login.Login());
+            }
         }
 
         //Preparando a janela de nosso projeto
