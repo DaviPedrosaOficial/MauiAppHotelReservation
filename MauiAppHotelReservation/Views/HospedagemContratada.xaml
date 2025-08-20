@@ -11,12 +11,14 @@
         </LinearGradientBrush>
     </ContentPage.Background>
 
+    <!-- Binding Context utilizado na página é criado na página ContratacaoHospedagem.xaml.cs na linha 60 -->
+    
     <ScrollView>
         <VerticalStackLayout VerticalOptions="Center"
                              Spacing="10"
                              Margin="10, 50">
             <Label 
-                Text="Suite Presidencial"
+                Text="{Binding QuartoSelecionado.Descrição}"
                 HorizontalOptions="Center"
                 FontSize="Header"
                 FontFamily="LavishlyYoursRegular"
@@ -30,14 +32,22 @@
                         Text="Hospedes"
                         HorizontalTextAlignment="Center"
                         Padding="0, 0, 0, 20"/>
-                    <Grid ColumnDefinitions="*, *">
+                    <Grid ColumnDefinitions="*, *, *, *">
+                        
+                        <!-- Adultos -->
                         <Label
-                            Text="Adultos:"
-                            HorizontalTextAlignment="Center"/>
+                            Text="Adultos:"/>
+                        <Label
+                            Text="{Binding QuantidadeAdultos}"
+                            Grid.Column="1"/>
+                        
+                        <!-- Crianças -->
                         <Label
                             Text="Crianças:"
-                            HorizontalTextAlignment="Center"
-                            Grid.Column="1"/>
+                            Grid.Column="2"/>
+                        <Label
+                            Text="{Binding QuantidadeCriancas}"
+                            Grid.Column="3"/>
                     </Grid>
                 </VerticalStackLayout>
             </Frame>
@@ -48,42 +58,44 @@
                     <Grid RowDefinitions="Auto, Auto"
                           ColumnDefinitions="*, *, *"
                           RowSpacing="10">
+                        
+                        <!-- Layout Check-In -->
                         <Label
-                            Text="Check-In:"
-                            HorizontalTextAlignment="Center"/>
+                            Text="Check-In:"/>
+                        <Label
+                            Text="{Binding DataCheckIn, StringFormat='{}{0:dd/MM/yyyy}'}"
+                            Grid.Row="1"/>
+
+                        <!-- layout Check-Out -->
                         <Label
                             Text="Check-out:"
-                            Grid.Column="1"
-                            HorizontalTextAlignment="Center"/>
+                            Grid.Column="1"/>
                         <Label
-                            Text="Estadia: "
-                            Grid.Column="2"
-                            HorizontalTextAlignment="Center"/>
-
-                        <Label
-                            Text="26/10/1999"
+                            Text="{Binding DataCheckOut, StringFormat='{}{0:dd/MM/yyyy}'}"
                             Grid.Row="1"
-                            HorizontalTextAlignment="Center"/>
+                            Grid.Column="1"/>
+                        
+                        <!-- Layout Estadia -->
                         <Label
-                            Text="29/10/1999"
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            HorizontalTextAlignment="Center"/>
+                            Text="Estadia (Dias):"
+                            Grid.Column="2"/>
                         <Label
-                            Text="3"
+                            Text="{Binding Estadia}"
                             Grid.Row="1"
-                            Grid.Column="2"
-                            HorizontalTextAlignment="Center"/>
+                            Grid.Column="2"/>
                     </Grid>
                 </VerticalStackLayout>
             </Frame>
 
             <!-- Grid valor total -->
             <Frame Margin="10, 5">
-                <VerticalStackLayout>
+                <HorizontalStackLayout HorizontalOptions="Center">
                     <Label
-                       Text="Valor total da Reserva: R$ 1750,00"/>
-                </VerticalStackLayout>
+                       Text="Valor total da Reserva: "
+                       Margin="0,0,10,0"/>
+                    <Label
+                        Text="{Binding ValorTotal, StringFormat='{}{0:c}'}"/>
+                </HorizontalStackLayout>
             </Frame>
 
             <!-- Botão de confirmação -->
