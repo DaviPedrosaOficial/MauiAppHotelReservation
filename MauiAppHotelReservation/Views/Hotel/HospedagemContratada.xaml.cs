@@ -9,12 +9,12 @@ public partial class HospedagemContratada : ContentPage
 		InitializeComponent();
 	}
 
-    private void btn_confirma_reserva_Clicked(System.Object sender, System.EventArgs e)
+    private void btn_retorna_menu_Clicked(System.Object sender, System.EventArgs e)
     {
 
 		try 
 		{
-            // Recebe os dados do quarto selecionado
+            // Retornando ao menu principal após a confirmação da reserva
             Navigation.PushAsync(new MainPage());
 
         } 

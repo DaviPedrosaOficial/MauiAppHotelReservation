@@ -104,11 +104,11 @@
 
             <!-- Botão de confirmação -->
             <Button
-                x:Name="btn_confirma_reserva"
+                x:Name="btn_retorna_menu"
                 Text="Retornar ao menu"
                 Margin="10, 5"
                 BackgroundColor="#d2691e"
-                Clicked="btn_confirma_reserva_Clicked"/>
+                Clicked="btn_retorna_menu_Clicked"/>
 
         </VerticalStackLayout>
     </ScrollView>
