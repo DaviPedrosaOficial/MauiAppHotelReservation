@@ -11,17 +11,18 @@
             <GradientStop Color="#B8860B" Offset="0.9"/>
         </LinearGradientBrush>
     </ContentPage.Background>
-    
-    <VerticalStackLayout VerticalOptions="Center"
-                         Margin="25"
-                         Spacing="20">
+
+    <Grid Margin="25"
+          RowDefinitions="Auto,Auto,*,Auto"
+          RowSpacing="10">
+        
         <HorizontalStackLayout HorizontalOptions="Center">
             <Label 
                 Text="Bem Vindo (a)"
                 HorizontalTextAlignment="Center" 
                 FontSize="Title"/>
             <Label
-                Text="{Binding nomeCliente}"
+                Text="{Binding Usuario.Usuario}"
                 HorizontalTextAlignment="Center"
                 FontSize="Title"
                 Padding="10,0,0,0"/>
@@ -29,28 +30,76 @@
 
         <Label
             Text="Minhas Reservas"
+            Grid.Row="1"
             Margin="0,0,0,25"/>
 
-        <Frame>
-            <VerticalStackLayout>
-                <Label
-                    Text="Lista de reservas"/>
-            </VerticalStackLayout>
+        <Frame Grid.Row="2">
+            <ScrollView>
+                <CollectionView x:Name="cvReservas">
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout Padding="12" Spacing="6">
+                            <Label Text="Você ainda não tem reservas."
+                               FontAttributes="Bold" />
+                            <Label Text="Após contratar uma hospedagem, ela aparecerá aqui." FontSize="12"/>
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10"
+                                  ColumnDefinitions="Auto"
+                                  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                                  RowSpacing="10"
+                                  HorizontalOptions="Center">
+
+                                <!-- Título: Quarto -->
+                                <Label Grid.Row="0" Grid.ColumnSpan="2"
+                                   Text="{Binding QuartoSelecionado.Descrição}"
+                                   FontAttributes="Bold" />
+
+                                <!-- Datas -->
+                                <Label Grid.Row="1" Grid.ColumnSpan="2"
+                                   Text="{Binding DataCheckIn, StringFormat='Check-in: {0:dd/MM/yyyy}'}"/>
+                                <Label Grid.Row="2" Grid.ColumnSpan="2"
+                                   Text="{Binding DataCheckOut, StringFormat='Check-out: {0:dd/MM/yyyy}'}"/>
+
+                                <!-- Pessoas / Estadia -->
+                                <Label Grid.Row="3" 
+                                       Text="{Binding QuantidadeAdultos, StringFormat='Adultos: {0}'}"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label Grid.Row="4"
+                                       Text="{Binding QuantidadeCriancas, StringFormat='Crianças: {0}'}"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label Grid.Row="5"
+                                       Text="{Binding Estadia, StringFormat='Estadia: {0} noite(s)'}"
+                                       HorizontalTextAlignment="Center"/>
+
+                                <!-- Total -->
+                                <Label Text="{Binding ValorTotal, StringFormat='Total: R$ {0:N2}'}"
+                                       Grid.Row="6"
+                                       FontAttributes="Bold" VerticalOptions="Center"/>
+
+                                <!-- Botões -->
+                                <HorizontalStackLayout Grid.Row="7" Spacing="10" Margin="0,10,0,0">
+
+                                    <Button Text="Alterar"
+                                        Clicked="btn_alterar_reserva_Clicked"
+                                        CommandParameter="{Binding}" />
+                                    <Button Text="Cancelar"
+                                        Clicked="btn_cancela_reserva_Clicked"
+                                        CommandParameter="{Binding}" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
         </Frame>
-
-        <Button 
-            x:Name="btn_cancela_reserva"
-            Text="Cancelar reserva"
-            Clicked="btn_cancela_reserva_Clicked"/>
-
-        <Button
-            x:Name="btn_alterar_reserva"
-            Text="Alterar reserva"
-            Clicked="btn_alterar_reserva_Clicked"/>
 
         <Button
             x:Name="btn_retorna_menu"
+            Grid.Row="3"
             Text="Retornar ao Menu"
             Clicked="btn_retorna_menu_Clicked"/>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

@@ -13,6 +13,7 @@ public partial class Cadastro : ContentPage
     {
         InitializeComponent();
         usuarios = UsuarioService.Instance.Usuarios;
+        PropriedadesDoApp = (App)Application.Current;
     }
 
     private async void btn_cadastro_cadastro_Clicked(object sender, EventArgs e)

@@ -16,9 +16,11 @@ public partial class Login : ContentPage
         InitializeComponent();
         usuarios = UsuarioService.Instance.Usuarios;
 
-        while (usuarios.Count > PropriedadesDoApp.lista_clientes.Count)
+        PropriedadesDoApp = (App)Application.Current;
+
+        for (int i = PropriedadesDoApp.lista_clientes.Count; i < usuarios.Count; i++)
         {
-            PropriedadesDoApp.lista_clientes.Add(new Client(usuarios[-1]));
+            PropriedadesDoApp.lista_clientes.Add(new Client(usuarios[i]));
         }
     }
 

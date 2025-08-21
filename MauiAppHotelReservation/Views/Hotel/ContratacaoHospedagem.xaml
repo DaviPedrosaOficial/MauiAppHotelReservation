@@ -116,7 +116,7 @@
 
                     <Button
                         x:Name="btn_avancar"
-                        Text="Avançar"
+                        Text="Confirmar estádia"
                         BackgroundColor="#d2691e"
                         Clicked="btn_avancar_Clicked"/>
 

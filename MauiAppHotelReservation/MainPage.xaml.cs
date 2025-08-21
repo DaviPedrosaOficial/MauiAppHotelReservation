@@ -2,27 +2,38 @@
 {
     public partial class MainPage : ContentPage
     {
-
+        App PropriedadesDoApp;
         public MainPage()
         {
             InitializeComponent();
+            PropriedadesDoApp = (App)Application.Current;
         }
 
         private async void btn_reservas_Clicked(System.Object sender, System.EventArgs e)
         {
-            var nomeCliente = await SecureStorage.GetAsync("usuario_logado");
 
-            await Navigation.PushAsync(new Views.Hotel.ReservasHospedagem
+            if (string.IsNullOrEmpty(await SecureStorage.GetAsync("usuario_logado")))
             {
-                BindingContext = nomeCliente
-            });
+                await DisplayAlert("Erro!", "Você precisa estar logado para acessar as reservas!", "OK");
+                return;
+            }
 
-            
+            for(int i = 0; i < PropriedadesDoApp.lista_clientes.Count; i++)
+            {
+                if (PropriedadesDoApp.lista_clientes[i].Usuario.Usuario == await SecureStorage.GetAsync("usuario_logado"))
+                {
+                    await Navigation.PushAsync(new Views.Hotel.ReservasHospedagem
+                    {
+                        BindingContext = PropriedadesDoApp.lista_clientes[i]
+                    });
+                    break;
+                }
+            }  
         }
 
         private void btn_reservar_Clicked(System.Object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new Views.Hotel.ContratacaoHospedagem());
+            App.Current.MainPage = new NavigationPage(new Views.Hotel.ContratacaoHospedagem());
         }
 
         private void btn_deslogar_Clicked(System.Object sender, System.EventArgs e)
