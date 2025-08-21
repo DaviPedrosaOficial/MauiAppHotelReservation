@@ -60,20 +60,43 @@ public partial class ContratacaoHospedagem : ContentPage
                 DataCheckOut = dtpck_check_out.Date
             };
 
-            // Cria uma nova instância do modelo Hospedagem e preenche com os dados do formulário
-           await Navigation.PushAsync(new Views.Hotel.HospedagemContratada() 
-           {
-               // Passa a hospedagem criada para a próxima página (HospedagemContratada.xaml)
-               BindingContext = hospedagem
-           });
-        
-		} 
-		catch (Exception ex) 
-		{
+
+            // Cria uma nova instância do modelo Reserva e preenche com os dados do formulário
+            Reserva reserva = new Reserva 
+            {
+                // Obtém o quarto selecionado no Picker e converte para o tipo Quarto
+                QuartoSelecionado = (Quarto)pck_quarto.SelectedItem,
+
+                // Obtém a quantidade de adultos no stepper e converte para inteiro (ContrataçãoDeHospedagem.xaml Linha 54)
+                QuantidadeAdultos = Convert.ToInt32(stp_adultos.Value),
+
+                // Obtém a quantidade de crianças no stepper e converte para inteiro (ContrataçãoDeHospedagem.xaml Linha 67)
+                QuantidadeCriancas = Convert.ToInt32(stp_criancas.Value),
+
+                // Obtém a data de check-in selecionada no DatePicker
+                DataEntrada = dtpck_check_in.Date,
+
+                // Obtém a data de check-out selecionada no DatePicker
+                DataSaida = dtpck_check_out.Date
+            };
+
+            // Adiciona a reserva à lista de reservas do App
+            PropriedadesDoApp.lista_reservas.Add(reserva);
+            
+            // Alerta de confirmação de reserva
+            await DisplayAlert("Reserva Confirmada!", "Sua Reserva foi efetuava, você será redirecionado ao comprovante de sua reserva!", "Ok");
+            
+            // Navega para a próxima página e passa a hospedagem criada
+            await Navigation.PushAsync(new Views.Hotel.HospedagemContratada
+            {
+                BindingContext = hospedagem
+            });
+        }
+        catch (Exception ex)
+        {
             // Exibe uma mensagem de erro caso ocorra uma exceção
             await DisplayAlert("Erro", ex.Message, "OK");
-        
-		}
+        }
     }
 
 

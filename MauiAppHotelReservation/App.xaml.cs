@@ -32,6 +32,8 @@ namespace MauiAppHotelReservation
             }
         };
 
+        public List<Reserva> lista_reservas = new List<Reserva>();
+
         public App()
         {
             // Inicializando os componentes da aplicação

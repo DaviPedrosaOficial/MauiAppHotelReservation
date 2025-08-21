@@ -1,3 +1,5 @@
+using MauiAppHotelReservation.Models;
+
 namespace MauiAppHotelReservation.Views.Hotel;
 
 public partial class HospedagemContratada : ContentPage
@@ -13,7 +15,7 @@ public partial class HospedagemContratada : ContentPage
 		try 
 		{
             // Recebe os dados do quarto selecionado
-            Navigation.PopAsync();
+            Navigation.PushAsync(new MainPage());
 
         } 
 		catch (Exception ex) 

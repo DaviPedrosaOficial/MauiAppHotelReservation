@@ -22,8 +22,12 @@
                 HorizontalOptions="Center"
                 FontSize="Header"
                 FontFamily="LavishlyYoursRegular"
-                Margin="0,0,0,25"
-                Padding="0,0,0,25"/>
+                Padding="0,0,0,10"/>
+
+            <Label
+                Text="Reserva Confirmada"
+                FontSize="Subtitle"
+                Margin="0,0,0,35"/>
 
             <!-- Grid de Hospedes -->
             <Frame Margin="10, 0">
@@ -101,7 +105,7 @@
             <!-- Botão de confirmação -->
             <Button
                 x:Name="btn_confirma_reserva"
-                Text="Confirmar reserva"
+                Text="Retornar ao menu"
                 Margin="10, 5"
                 BackgroundColor="#d2691e"
                 Clicked="btn_confirma_reserva_Clicked"/>
