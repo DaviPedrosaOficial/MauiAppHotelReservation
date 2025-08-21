@@ -37,6 +37,7 @@ public partial class ReservasHospedagem : ContentPage
 
     private void btn_cancela_reserva_Clicked(System.Object sender, System.EventArgs e)
     {
+        // Remove a reserva da coleção vinculada à CollectionView
         if (sender is Button btn && btn.CommandParameter is Hospedagem reserva)
         {
             reservas_do_cliente.Remove(reserva);
