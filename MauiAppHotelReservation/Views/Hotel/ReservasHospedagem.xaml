@@ -2,11 +2,55 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppHotelReservation.Views.Hotel.ReservasHospedagem"
-             Title="ReservasHospedagem">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             Title="ReservasHospedagem"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Background>
+        <LinearGradientBrush>
+            <GradientStop Color="#F5DEB3" Offset="0.2"/>
+            <GradientStop Color="#B8860B" Offset="0.9"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+    
+    <VerticalStackLayout VerticalOptions="Center"
+                         Margin="25"
+                         Spacing="20">
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label 
+                Text="Bem Vindo (a)"
+                HorizontalTextAlignment="Center" 
+                FontSize="Title"/>
+            <Label
+                Text="Nome"
+                HorizontalTextAlignment="Center"
+                FontSize="Title"
+                Padding="10,0,0,0"/>
+        </HorizontalStackLayout>
+
+        <Label
+            Text="Minhas Reservas"
+            Margin="0,0,0,25"/>
+
+        <Frame>
+            <VerticalStackLayout>
+                <Label
+                    Text="Lista de reservas"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <Button 
+            x:Name="btn_cancela_reserva"
+            Text="Cancelar reserva"
+            Clicked="btn_cancela_reserva_Clicked"/>
+
+        <Button
+            x:Name="btn_alterar_reserva"
+            Text="Alterar reserva"
+            Clicked="btn_alterar_reserva_Clicked"/>
+
+        <Button
+            x:Name="btn_retorna_menu"
+            Text="Retornar ao Menu"
+            Clicked="btn_retorna_menu_Clicked"/>
     </VerticalStackLayout>
 </ContentPage>
