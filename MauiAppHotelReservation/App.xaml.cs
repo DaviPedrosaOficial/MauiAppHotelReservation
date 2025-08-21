@@ -32,7 +32,7 @@ namespace MauiAppHotelReservation
             }
         };
 
-        public List<Reserva> lista_reservas = new List<Reserva>();
+        public List<Client> lista_clientes = new List<Client>();
 
         public App()
         {

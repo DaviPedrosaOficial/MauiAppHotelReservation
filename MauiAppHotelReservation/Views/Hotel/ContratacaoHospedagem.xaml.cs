@@ -60,29 +60,21 @@ public partial class ContratacaoHospedagem : ContentPage
                 DataCheckOut = dtpck_check_out.Date
             };
 
+            // Confirma o cliente logado usando o SecureStorage
+            var clienteLogado = await SecureStorage.GetAsync("usuario_logado");
 
-            // Cria uma nova instância do modelo Reserva e preenche com os dados do formulário
-            Reserva reserva = new Reserva 
+            // Inserindo a hospedagem na lista de reservas do App
+            for (int i = 0; i < PropriedadesDoApp.lista_clientes.Count; i++)
             {
-                // Obtém o quarto selecionado no Picker e converte para o tipo Quarto
-                QuartoSelecionado = (Quarto)pck_quarto.SelectedItem,
+                // Verifica se o cliente logado é o mesmo que o cliente na lista
+                if (PropriedadesDoApp.lista_clientes[i].Usuario.Usuario == clienteLogado)
+                {
+                    // Adiciona a hospedagem à lista de reservas do cliente logado
+                    PropriedadesDoApp.lista_clientes[i].Reservas.Add(hospedagem);
+                    break;
+                }
+            }
 
-                // Obtém a quantidade de adultos no stepper e converte para inteiro (ContrataçãoDeHospedagem.xaml Linha 54)
-                QuantidadeAdultos = Convert.ToInt32(stp_adultos.Value),
-
-                // Obtém a quantidade de crianças no stepper e converte para inteiro (ContrataçãoDeHospedagem.xaml Linha 67)
-                QuantidadeCriancas = Convert.ToInt32(stp_criancas.Value),
-
-                // Obtém a data de check-in selecionada no DatePicker
-                DataEntrada = dtpck_check_in.Date,
-
-                // Obtém a data de check-out selecionada no DatePicker
-                DataSaida = dtpck_check_out.Date
-            };
-
-            // Adiciona a reserva à lista de reservas do App
-            PropriedadesDoApp.lista_reservas.Add(reserva);
-            
             // Alerta de confirmação de reserva
             await DisplayAlert("Reserva Confirmada!", "Sua Reserva foi efetuava, você será redirecionado ao comprovante de sua reserva!", "Ok");
             

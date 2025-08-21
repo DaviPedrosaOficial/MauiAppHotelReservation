@@ -8,9 +8,16 @@
             InitializeComponent();
         }
 
-        private void btn_reservas_Clicked(System.Object sender, System.EventArgs e)
+        private async void btn_reservas_Clicked(System.Object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new Views.Hotel.ReservasHospedagem());
+            var nomeCliente = await SecureStorage.GetAsync("usuario_logado");
+
+            await Navigation.PushAsync(new Views.Hotel.ReservasHospedagem
+            {
+                BindingContext = nomeCliente
+            });
+
+            
         }
 
         private void btn_reservar_Clicked(System.Object sender, System.EventArgs e)
@@ -24,7 +31,7 @@
             SecureStorage.Remove("usuario_logado");
             
             // Redireciona para a página de login
-            App.Current.MainPage = new Views.Login.Login();
+            App.Current.MainPage = new NavigationPage(new Views.Login.Login());
         }
     }
 }

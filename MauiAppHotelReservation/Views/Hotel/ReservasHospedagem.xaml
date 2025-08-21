@@ -21,7 +21,7 @@
                 HorizontalTextAlignment="Center" 
                 FontSize="Title"/>
             <Label
-                Text="Nome"
+                Text="{Binding nomeCliente}"
                 HorizontalTextAlignment="Center"
                 FontSize="Title"
                 Padding="10,0,0,0"/>

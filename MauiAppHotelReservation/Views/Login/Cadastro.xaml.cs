@@ -1,10 +1,13 @@
 using MauiAppHotelReservation.Services;
+using MauiAppHotelReservation.Models;
 
 namespace MauiAppHotelReservation.Views.Login;
 
 public partial class Cadastro : ContentPage
 {
     private List<DadosUsuario> usuarios;
+
+    App PropriedadesDoApp;
 
     public Cadastro()
     {
@@ -43,12 +46,13 @@ public partial class Cadastro : ContentPage
 
                 // Adicionando o usuário na lista de usuários
                 usuarios.Add(novo_usuario);
+                PropriedadesDoApp.lista_clientes.Add(new Client(novo_usuario));
 
                 // Salvando o usuário no armazenamento seguro do dispositivo
                 await SecureStorage.SetAsync("usuario_logado", novo_usuario.Usuario);
 
                 // Redirecionando para a página protegida
-                Application.Current.MainPage = new MainPage();
+                await Navigation.PushAsync(new MainPage());
             }
 
         }
