@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using MauiAppHotelReservation.Models;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace MauiAppHotelReservation.ViewModels
@@ -21,7 +22,7 @@ namespace MauiAppHotelReservation.ViewModels
         public string Subtitulo => EstadoAtual switch
         {
             TipoAlteracao.Menu => "O que você deseja alterar?",
-            TipoAlteracao.Hospedes => "Quantos hóspedes?",
+            TipoAlteracao.Hospedes => "Quantidade de hospedes?",
             TipoAlteracao.Quarto => "Qual tipo de quarto?",
             TipoAlteracao.Datas => "Quais as novas datas?",
             _ => ""
@@ -48,28 +49,36 @@ namespace MauiAppHotelReservation.ViewModels
         public int NumeroAdultos
         {
             get => qtdAdultos;
-            set { qtdAdultos = Math.Max(1,10); OnPropertyChanged(); AtualizarUI(); }
+            set { qtdAdultos = Math.Clamp(value, 1, 10); OnPropertyChanged(); AtualizarUI(); }
         }
 
-        private int qtdCriancas = 1;
+        private int qtdCriancas = 0;
         public int NumeroCriancas
         {
             get => qtdCriancas;
-            set { qtdCriancas = Math.Max(0, 10); OnPropertyChanged(); AtualizarUI(); }
+            set { qtdCriancas = Math.Clamp(value, 0, 10); OnPropertyChanged(); AtualizarUI(); }
         }
 
+        // Definindo os quanto de hóspedes
+        public ObservableCollection<Quarto> TiposDeQuarto { get; } =
+            new(new[]
+            {
+                new Quarto { Descrição = "Suíte Presidencial", ValorDiariaAdulto = 600, ValorDiariaCriança = 300 },
+                new Quarto { Descrição = "Suíte de Luxo",      ValorDiariaAdulto = 400, ValorDiariaCriança = 200 },
+                new Quarto { Descrição = "Flat",               ValorDiariaAdulto = 300, ValorDiariaCriança = 150 },
+                new Quarto { Descrição = "Suíte Single",       ValorDiariaAdulto = 220, ValorDiariaCriança = 110 },
+            });
 
-
-
-        // Propriedades para vinculação de dados enquanto altera a reserva (Quarto)
-        public ObservableCollection<string> TiposDeQuarto =
-            new(new[] { "Suíte Presidencial", "Suíte de Luxo", "Flat", "Suíte Single" });
-
-        private string quartoSelecionado;
-        public string TipoDeQuartoSelecionado
+        private Quarto quartoSelecionado;
+        public Quarto TipoDeQuartoSelecionado
         {
             get => quartoSelecionado;
-            set { quartoSelecionado = value; OnPropertyChanged(); AtualizarUI(); }
+            set { 
+                if(value == null) return;
+                quartoSelecionado = value;
+                OnPropertyChanged();
+                AtualizarUI(); 
+            }
         }
 
 
@@ -140,18 +149,21 @@ namespace MauiAppHotelReservation.ViewModels
                     case TipoAlteracao.Hospedes:
                         if (reservaDoCliente is Models.Hospedagem reservaH)
                         {
-                            reservaH.NumeroAdultos = NumeroAdultos;
-                            reservaH.NumeroCriancas = NumeroCriancas;
+                            reservaH.QuantidadeAdultos = NumeroAdultos;
+                            reservaH.QuantidadeCriancas = NumeroCriancas;
                         }
                         await App.Current.MainPage.DisplayAlert("Sucesso", "Número de hóspedes alterado com sucesso!", "OK");
                         EstadoAtual = TipoAlteracao.Menu;
+
+                        await Task.Delay(500); // Pequeno delay para melhor experiência do usuário
+                        await App.Current.MainPage.Navigation.PopAsync(); // Volta para a página anterior
                         break;
 
 
                     case TipoAlteracao.Quarto:
                         if (reservaDoCliente is Models.Hospedagem reservaQ)
                         {
-                            reservaQ.TipoDeQuarto = TipoDeQuartoSelecionado;
+                            reservaQ.QuartoSelecionado = TipoDeQuartoSelecionado;
                         }
                         await App.Current.MainPage.DisplayAlert("Sucesso", "Tipo de quarto alterado com sucesso!", "OK");
                         EstadoAtual = TipoAlteracao.Menu;
@@ -161,8 +173,8 @@ namespace MauiAppHotelReservation.ViewModels
                     case TipoAlteracao.Datas:
                         if (reservaDoCliente is Models.Hospedagem reservaD)
                         {
-                            reservaD.CheckIn = CheckIn;
-                            reservaD.CheckOut = CheckOut;
+                            reservaD.DataCheckIn = CheckIn;
+                            reservaD.DataCheckOut = CheckOut;
                         }
                         await App.Current.MainPage.DisplayAlert("Sucesso", "Datas alteradas com sucesso!", "OK");
                         EstadoAtual = TipoAlteracao.Menu;
@@ -176,14 +188,14 @@ namespace MauiAppHotelReservation.ViewModels
         private void AtualizarUI()
         {
             // Texto do botão por passo
-            TextoBotaoConfirmar = estadoAtual == TipoAlteracao.Menu ? "Confirmar" : "Salvar alterações";
+            Btn_Confirmar = estadoAtual == TipoAlteracao.Menu ? "Confirmar" : "Salvar alterações";
 
             // Validações por passo
-            PodeConfirmar = estadoAtual switch
+            Btn_Pode_Confirmar = estadoAtual switch
             {
-                TipoAlteracao.Menu => !string.IsNullOrWhiteSpace(SelectedMenuOption),
-                TipoAlteracao.Hospedes => NumeroHospedes >= 1,
-                TipoAlteracao.Quarto => !string.IsNullOrWhiteSpace(TipoDeQuartoSelecionado),
+                TipoAlteracao.Menu => !string.IsNullOrWhiteSpace(MenuSelecionado),
+                TipoAlteracao.Hospedes => NumeroAdultos >=  1 && NumeroCriancas >= 0,
+                TipoAlteracao.Quarto => quartoSelecionado != null,
                 TipoAlteracao.Datas => CheckOut > CheckIn,
                 _ => false
             };

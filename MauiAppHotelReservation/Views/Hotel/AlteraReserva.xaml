@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppHotelReservation.Views.Hotel.AlteraReserva"
+              xmlns:vm="clr-namespace:MauiAppHotelReservation.ViewModels"
+             xmlns:local="clr-namespace:MauiAppHotelReservation.Models"
              Title="AlteraReserva"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Background>
@@ -11,21 +13,126 @@
         </LinearGradientBrush>
     </ContentPage.Background>
 
-    <Grid RowDefinitions="*,2*,*">
+    <ContentPage.Resources>c:\users\davi\onedrive\documentos\projetospessoais\maui\hotel\mauiapphotelreservation\mauiapphotelreservation\platforms\
 
-        <VerticalStackLayout VerticalOptions="Center">
-            <Label
-                Text="Alterar Hospedagem"
-                FontSize="Title"/>
+        <!-- Selector que escolhe o template conforme o passo -->
+        <local:AlteraReservaTemplateSelector x:Key="AlteraReservaSelector">
+            <local:AlteraReservaTemplateSelector.MenuTemplate>
+                
+                
+                <!-- MENU -->
+                <DataTemplate>
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="O que você deseja alterar?" FontAttributes="Bold" />
+                        <Picker Title="Selecione uma opção"
+                                ItemsSource="{Binding OpcoesMenu}"
+                                SelectedItem="{Binding MenuSelecionado}" />
+                        <Label Text="Dica: toque em Confirmar para avançar." FontSize="12" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </local:AlteraReservaTemplateSelector.MenuTemplate>
+
+            <local:AlteraReservaTemplateSelector.AdultosTemplate>
+                <!-- ADULTOS -->
+                <DataTemplate>
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Atualizar número de adultos" FontAttributes="Bold"/>
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="0,8,0,0">
+                            <Label Text="Hóspedes:" VerticalOptions="Center"/>
+                            <Stepper Grid.Column="1"
+                                     Minimum="1" Maximum="10" Increment="1"
+                                     Value="{Binding NumeroAdultos}" />
+                            <Label Grid.Column="2" 
+                                   Text="{Binding NumeroAdultos}" 
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </local:AlteraReservaTemplateSelector.AdultosTemplate>
+
+            <local:AlteraReservaTemplateSelector.CriancasTemplate>
+                <!-- CRIANÇAS -->
+                <DataTemplate>
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Atualizar número de crianças" FontAttributes="Bold"/>
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="0,8,0,0">
+                            <Label Text="Crianças:" VerticalOptions="Center"/>
+                            <Stepper Grid.Column="1"
+                         Minimum="0" Maximum="10" Increment="1"
+                         Value="{Binding NumeroCriancas}" />
+                            <Label Grid.Column="2" 
+                       Text="{Binding NumeroCriancas}" 
+                       VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </local:AlteraReservaTemplateSelector.CriancasTemplate>
+
+
+
+            <local:AlteraReservaTemplateSelector.QuartoTemplate>
+                <!-- QUARTO -->
+                <DataTemplate>
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Alterar tipo de quarto" FontAttributes="Bold"/>
+                        <Picker Title="Tipo de quarto"
+                                ItemsSource="{Binding TiposDeQuarto}"
+                                ItemDisplayBinding="{Binding Descrição}"
+                                SelectedItem="{Binding TipoDeQuartoSelecionado}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </local:AlteraReservaTemplateSelector.QuartoTemplate>
+
+            
+            
+            <local:AlteraReservaTemplateSelector.DatasTemplate>
+                <!-- DATAS -->
+                <DataTemplate>
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Atualizar datas da estadia" FontAttributes="Bold"/>
+                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*">
+                            <VerticalStackLayout>
+                                <Label Text="Check-in"/>
+                                <DatePicker Date="{Binding CheckIn}" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="Check-out"/>
+                                <DatePicker Date="{Binding CheckOut}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                        <Label Text="{Binding DatasAviso}" FontSize="12" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </local:AlteraReservaTemplateSelector.DatasTemplate>
+        </local:AlteraReservaTemplateSelector>
+    </ContentPage.Resources>
+
+   
+    
+    <!-- Layout principal: Título | Frame dinâmico | Botão -->
+    <Grid RowDefinitions="Auto,*,Auto" Padding="16">
+        
+        
+        <!-- TÍTULO -->
+        <VerticalStackLayout>
+            <Label Text="Alterar Hospedagem" FontSize="Title" HorizontalTextAlignment="Center"/>
+            <Label Text="{Binding Subtitulo}" FontSize="12" HorizontalTextAlignment="Center" Opacity="0.7"/>
         </VerticalStackLayout>
 
-        <Frame Grid.Row="1"
-               Margin="15">
-            <CollectionView x:Name="cvFrameAltera">
-                <CollectionView.
-            </CollectionView>
-            
+        <!-- FRAME -->
+        <Frame Grid.Row="1" Margin="0,12" Padding="16" HasShadow="True" CornerRadius="16">
+
+            <!-- Importante: o ContentPresenter recebe o próprio ViewModel e o selector escolhe o template -->
+            <ContentPresenter Content="{Binding .}"
+                              ContentTemplateSelector="{StaticResource AlteraReservaSelector}" />
         </Frame>
-        
+
+        <!-- BOTÃO -->
+        <Button Grid.Row="2"
+                Text="{Binding Btn_Confirmar}"
+                Command="{Binding ConfirmCommand}"
+                IsEnabled="{Binding Btn_Pode_Confirmar }"
+                Margin="0,12,0,0"
+                HeightRequest="48" CornerRadius="12"/>
     </Grid>
 </ContentPage>
