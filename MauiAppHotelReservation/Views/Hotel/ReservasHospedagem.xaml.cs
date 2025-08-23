@@ -13,10 +13,12 @@ public partial class ReservasHospedagem : ContentPage
 		InitializeComponent();
 	}
 
+    // Método chamado quando a página aparece na tela
     protected override async void OnAppearing()
     {
         try
         {
+            // Chama o método base para garantir que qualquer lógica de exibição padrão seja executada
             base.OnAppearing();
 
             var app = (App)Application.Current;
@@ -48,9 +50,10 @@ public partial class ReservasHospedagem : ContentPage
     {
         if (sender is Button btn && btn.CommandParameter is Hospedagem reserva)
         {
-            // Aqui você pode navegar para uma tela de edição
-            // ou abrir um popup para alterar datas/pessoas.
-            await DisplayAlert("Alterar", "Abrir tela de alteração desta reserva.", "OK");
+            await Navigation.PushAsync(new AlteraReserva
+            {
+                BindingContext = reserva
+            });
         }
     }
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppHotelReservation.Views.Hotel.AlteraReserva"
+             Title="AlteraReserva"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Background>
+        <LinearGradientBrush>
+            <GradientStop Color="#F5DEB3" Offset="0.2"/>
+            <GradientStop Color="#B8860B" Offset="0.9"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid RowDefinitions="*,2*,*">
+
+        <VerticalStackLayout VerticalOptions="Center">
+            <Label
+                Text="Alterar Hospedagem"
+                FontSize="Title"/>
+        </VerticalStackLayout>
+
+        <Frame Grid.Row="1"
+               Margin="15">
+            <CollectionView x:Name="cvFrameAltera">
+                <CollectionView.
+            </CollectionView>
+            
+        </Frame>
+        
+    </Grid>
+</ContentPage>
