@@ -10,11 +10,11 @@ namespace MauiAppHotelReservation.Models
     {
         // Definindo os DataTemplates para cada estado de nosso seletor
         public DataTemplate MenuTemplate { get; set; }
-        public DataTemplate AdultosTemplate { get; set; }
-        public DataTemplate CriancasTemplate { get; set; }
+        public DataTemplate HospedesTemplate { get; set; }
         public DataTemplate QuartoTemplate { get; set; }
         public DataTemplate DatasTemplate { get; set; }
 
+        // Selecionando o template baseado no estado atual do ViewModel
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
             if (item is ViewModels.AlteraReservaViewModel viewModel)
@@ -22,7 +22,7 @@ namespace MauiAppHotelReservation.Models
                 return viewModel.EstadoAtual switch
                 {
                     ViewModels.TipoAlteracao.Menu => MenuTemplate,
-                    ViewModels.TipoAlteracao.Hospedes => AdultosTemplate, // Inicia com AdultosTemplate
+                    ViewModels.TipoAlteracao.Hospedes => HospedesTemplate,
                     ViewModels.TipoAlteracao.Quarto => QuartoTemplate,
                     ViewModels.TipoAlteracao.Datas => DatasTemplate,
                     _ => MenuTemplate,

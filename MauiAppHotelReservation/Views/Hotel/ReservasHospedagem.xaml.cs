@@ -50,10 +50,7 @@ public partial class ReservasHospedagem : ContentPage
     {
         if (sender is Button btn && btn.CommandParameter is Hospedagem reserva)
         {
-            await Navigation.PushAsync(new AlteraReserva(reserva)
-            {
-                BindingContext = reserva
-            });
+            await Navigation.PushAsync(new AlteraReserva(reserva));
         }
     }
 

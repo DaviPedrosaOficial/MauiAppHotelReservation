@@ -4,6 +4,7 @@
              x:Class="MauiAppHotelReservation.Views.Hotel.AlteraReserva"
               xmlns:vm="clr-namespace:MauiAppHotelReservation.ViewModels"
              xmlns:local="clr-namespace:MauiAppHotelReservation.Models"
+             xmlns:controls="clr-namespace:MauiAppHotelReservation.Controls"
              Title="AlteraReserva"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Background>
@@ -13,7 +14,7 @@
         </LinearGradientBrush>
     </ContentPage.Background>
 
-    <ContentPage.Resources>c:\users\davi\onedrive\documentos\projetospessoais\maui\hotel\mauiapphotelreservation\mauiapphotelreservation\platforms\
+    <ContentPage.Resources>
 
         <!-- Selector que escolhe o template conforme o passo -->
         <local:AlteraReservaTemplateSelector x:Key="AlteraReservaSelector">
@@ -32,41 +33,45 @@
                 </DataTemplate>
             </local:AlteraReservaTemplateSelector.MenuTemplate>
 
-            <local:AlteraReservaTemplateSelector.AdultosTemplate>
-                <!-- ADULTOS -->
+            <!-- HÓSPEDES (Adultos + Crianças JUNTOS) -->
+            <local:AlteraReservaTemplateSelector.HospedesTemplate>
                 <DataTemplate>
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="Atualizar número de adultos" FontAttributes="Bold"/>
-                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="0,8,0,0">
-                            <Label Text="Hóspedes:" VerticalOptions="Center"/>
-                            <Stepper Grid.Column="1"
-                                     Minimum="1" Maximum="10" Increment="1"
-                                     Value="{Binding NumeroAdultos}" />
-                            <Label Grid.Column="2" 
-                                   Text="{Binding NumeroAdultos}" 
-                                   VerticalOptions="Center" />
-                        </Grid>
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </local:AlteraReservaTemplateSelector.AdultosTemplate>
+                        <Label Text="Atualizar número de hóspedes" FontAttributes="Bold"/>
 
-            <local:AlteraReservaTemplateSelector.CriancasTemplate>
-                <!-- CRIANÇAS -->
-                <DataTemplate>
-                    <VerticalStackLayout Spacing="12">
-                        <Label Text="Atualizar número de crianças" FontAttributes="Bold"/>
+                        <!-- Adultos -->
                         <Grid ColumnDefinitions="Auto,*,Auto" Padding="0,8,0,0">
-                            <Label Text="Crianças:" VerticalOptions="Center"/>
+                            
+                            <Label 
+                                Text="Adultos:" 
+                                VerticalOptions="Center"/>
+                            <Stepper Grid.Column="1" 
+                                     Minimum="1" 
+                                     Maximum="10" 
+                                     Increment="1"
+                                    Value="{Binding NumeroAdultos}" />
+                            <Label Grid.Column="2" Text="{Binding NumeroAdultos}" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <!-- Crianças -->
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            
+                            <Label 
+                                Text="Crianças:"
+                                VerticalOptions="Center"/>
                             <Stepper Grid.Column="1"
-                         Minimum="0" Maximum="10" Increment="1"
-                         Value="{Binding NumeroCriancas}" />
-                            <Label Grid.Column="2" 
-                       Text="{Binding NumeroCriancas}" 
-                       VerticalOptions="Center" />
+                                     Minimum="0" 
+                                     Maximum="10"
+                                     Increment="1"
+                                     Value="{Binding NumeroCriancas}" />
+                            <Label Grid.Column="2"
+                                   Text="{Binding NumeroCriancas}"
+                                   VerticalOptions="Center"/>
+                            
                         </Grid>
                     </VerticalStackLayout>
                 </DataTemplate>
-            </local:AlteraReservaTemplateSelector.CriancasTemplate>
+            </local:AlteraReservaTemplateSelector.HospedesTemplate>
 
 
 
@@ -122,9 +127,7 @@
         <!-- FRAME -->
         <Frame Grid.Row="1" Margin="0,12" Padding="16" HasShadow="True" CornerRadius="16">
 
-            <!-- Importante: o ContentPresenter recebe o próprio ViewModel e o selector escolhe o template -->
-            <ContentPresenter Content="{Binding .}"
-                              ContentTemplateSelector="{StaticResource AlteraReservaSelector}" />
+            <controls:TemplateHost SeletorDeTemplate="{StaticResource AlteraReservaSelector}" />
         </Frame>
 
         <!-- BOTÃO -->

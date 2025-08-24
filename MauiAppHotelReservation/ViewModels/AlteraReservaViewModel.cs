@@ -1,6 +1,10 @@
 ﻿using MauiAppHotelReservation.Models;
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
+
 
 namespace MauiAppHotelReservation.ViewModels
 {
@@ -13,8 +17,15 @@ namespace MauiAppHotelReservation.ViewModels
 
         public TipoAlteracao EstadoAtual
         {
-            get { return estadoAtual; }
-            set { estadoAtual = value; OnPropertyChanged(); AtualizarUI(); }
+            get => estadoAtual;
+            set
+            {
+                if (estadoAtual == value) return;
+                estadoAtual = value;
+                OnPropertyChanged();                // notifica EstadoAtual
+                OnPropertyChanged(nameof(Subtitulo)); // notifica Subtitulo também
+                AtualizarUI();
+            }
         }
 
 
@@ -156,7 +167,7 @@ namespace MauiAppHotelReservation.ViewModels
                         EstadoAtual = TipoAlteracao.Menu;
 
                         await Task.Delay(500); // Pequeno delay para melhor experiência do usuário
-                        await App.Current.MainPage.Navigation.PopAsync(); // Volta para a página anterior
+                        await App.Current.MainPage.Navigation.PushAsync(new Views.Hotel.ReservasHospedagem()); // Volta para a página anterior
                         break;
 
 
@@ -167,6 +178,9 @@ namespace MauiAppHotelReservation.ViewModels
                         }
                         await App.Current.MainPage.DisplayAlert("Sucesso", "Tipo de quarto alterado com sucesso!", "OK");
                         EstadoAtual = TipoAlteracao.Menu;
+
+                        await Task.Delay(500); // Pequeno delay para melhor experiência do usuário
+                        await App.Current.MainPage.Navigation.PushAsync(new Views.Hotel.ReservasHospedagem()); // Volta para a página anterior
                         break;
 
 
@@ -178,6 +192,9 @@ namespace MauiAppHotelReservation.ViewModels
                         }
                         await App.Current.MainPage.DisplayAlert("Sucesso", "Datas alteradas com sucesso!", "OK");
                         EstadoAtual = TipoAlteracao.Menu;
+
+                        await Task.Delay(500); // Pequeno delay para melhor experiência do usuário
+                        await App.Current.MainPage.Navigation.PushAsync(new Views.Hotel.ReservasHospedagem()); // Volta para a página anterior
                         break;
                 }
             });
