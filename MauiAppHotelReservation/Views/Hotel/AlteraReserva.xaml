@@ -7,6 +7,7 @@
              xmlns:controls="clr-namespace:MauiAppHotelReservation.Controls"
              Title="AlteraReserva"
              NavigationPage.HasNavigationBar="False">
+    
     <ContentPage.Background>
         <LinearGradientBrush>
             <GradientStop Color="#F5DEB3" Offset="0.2"/>
@@ -16,28 +17,44 @@
 
     <ContentPage.Resources>
 
-        <!-- Selector que escolhe o template conforme o passo -->
+        <!-- Selector que escolhe o template que será usado, permitindo que nossa página atualize conforme alterações (/Models/AlteraReservaTemplateSelector.cs) -->
         <local:AlteraReservaTemplateSelector x:Key="AlteraReservaSelector">
+            
+            <!-- MENU -->
             <local:AlteraReservaTemplateSelector.MenuTemplate>
                 
-                
-                <!-- MENU -->
                 <DataTemplate>
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="O que você deseja alterar?" FontAttributes="Bold" />
+                        
+                        <Label 
+                            Text="O que você deseja alterar?"
+                            FontAttributes="Bold" />
+                        
                         <Picker Title="Selecione uma opção"
                                 ItemsSource="{Binding OpcoesMenu}"
                                 SelectedItem="{Binding MenuSelecionado}" />
-                        <Label Text="Dica: toque em Confirmar para avançar." FontSize="12" Opacity="0.7"/>
+                        <!-- { Binding OpcoesMenu } Lista de Opções de nosso ViewModel => AlternaReservaViewModel.cs (linha 45) -->
+                        <!-- { Binding MenuSelecionado } Utilizando o SelectedItem para vincular dado selecionado pelo cliente => AlternaReservaViewModel.cs (linha 49) -->
+
+                        <Label 
+                            Text="Dica: toque em Confirmar para avançar."
+                            FontSize="12"
+                            Opacity="0.7"/>
+                        
                     </VerticalStackLayout>
                 </DataTemplate>
+                
             </local:AlteraReservaTemplateSelector.MenuTemplate>
 
             <!-- HÓSPEDES (Adultos + Crianças JUNTOS) -->
             <local:AlteraReservaTemplateSelector.HospedesTemplate>
+                
                 <DataTemplate>
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="Atualizar número de hóspedes" FontAttributes="Bold"/>
+                        
+                        <Label 
+                            Text="Atualizar número de hóspedes"
+                            FontAttributes="Bold"/>
 
                         <!-- Adultos -->
                         <Grid ColumnDefinitions="Auto,*,Auto" Padding="0,8,0,0">
@@ -45,12 +62,20 @@
                             <Label 
                                 Text="Adultos:" 
                                 VerticalOptions="Center"/>
+                            
                             <Stepper Grid.Column="1" 
                                      Minimum="1" 
                                      Maximum="10" 
                                      Increment="1"
                                     Value="{Binding NumeroAdultos}" />
-                            <Label Grid.Column="2" Text="{Binding NumeroAdultos}" VerticalOptions="Center"/>
+                            <!-- { Binding NumeroAdultos } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de adultos, baseado da regra de negócios de nosso sistema => AlternaReservaViewModel.cs (linha 61) -->
+
+                            <Label 
+                                   Grid.Column="2" 
+                                   Text="{Binding NumeroAdultos}"
+                                   VerticalOptions="Center"/>
+                            <!-- { Binding NumeroAdultos } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de adultos, baseado da regra de negócios de nosso sistema => AlternaReservaViewModel.cs (linha 61) -->
+                            
                         </Grid>
 
                         <!-- Crianças -->
@@ -59,57 +84,90 @@
                             <Label 
                                 Text="Crianças:"
                                 VerticalOptions="Center"/>
+                            
                             <Stepper Grid.Column="1"
                                      Minimum="0" 
                                      Maximum="10"
                                      Increment="1"
                                      Value="{Binding NumeroCriancas}" />
+                            <!-- { Binding NumeroCriancas } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de adultos, baseado da regra de negócios de nosso sistema => AlternaReservaViewModel.cs (linha 73) -->
+                            
                             <Label Grid.Column="2"
                                    Text="{Binding NumeroCriancas}"
                                    VerticalOptions="Center"/>
-                            
+                            <!-- { Binding NumeroCriancas } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de adultos, baseado da regra de negócios de nosso sistema => AlternaReservaViewModel.cs (linha 73) -->
+
                         </Grid>
                     </VerticalStackLayout>
                 </DataTemplate>
+                
             </local:AlteraReservaTemplateSelector.HospedesTemplate>
 
 
-
+            <!-- QUARTO -->
             <local:AlteraReservaTemplateSelector.QuartoTemplate>
-                <!-- QUARTO -->
+                
                 <DataTemplate>
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="Alterar tipo de quarto" FontAttributes="Bold"/>
+                        
+                        <Label 
+                            Text="Alterar tipo de quarto"
+                            FontAttributes="Bold"/>
+                        
                         <Picker Title="Tipo de quarto"
                                 ItemsSource="{Binding TiposDeQuarto}"
                                 ItemDisplayBinding="{Binding Descrição}"
                                 SelectedItem="{Binding TipoDeQuartoSelecionado}" />
+                        <!-- { Binding TiposDeQuarto } Lista de opções de quartos criada em nosso ViewModel => AlternaReservaViewModel.cs (linha 83) -->
+                        <!-- { Binding TipoDeQuartoSelecionado } Utilizando o SelectedItem para vincular dado selecionado pelo cliente => AlternaReservaViewModel.cs (linha 93) -->
+                        <!-- { Binding Descrição } Propriedade criada em nosso Model => Quarto.cs (linha 5) -->
+
                     </VerticalStackLayout>
                 </DataTemplate>
+                
             </local:AlteraReservaTemplateSelector.QuartoTemplate>
 
             
-            
+            <!-- DATAS -->
             <local:AlteraReservaTemplateSelector.DatasTemplate>
-                <!-- DATAS -->
+                
                 <DataTemplate>
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="Atualizar datas da estadia" FontAttributes="Bold"/>
+                        
+                        <Label 
+                               Text="Atualizar datas da estadia"
+                               FontAttributes="Bold"/>
+
                         <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*">
+
                             <VerticalStackLayout>
-                                <Label Text="Check-in"/>
+
+                                <Label 
+                                    Text="Check-in"/>
+
                                 <DatePicker Date="{Binding CheckIn}" />
+                                <!-- { Binding CheckIn } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de check-in, baseado da regra de negócios de nosso sistema => AlternaReservaViewModel.cs (linha 108) -->
                             </VerticalStackLayout>
+
                             <VerticalStackLayout Grid.Column="1">
-                                <Label Text="Check-out"/>
+
+                                <Label 
+                                    Text="Check-out"/>
+
                                 <DatePicker Date="{Binding CheckOut}" />
+                                <!-- { Binding CheckOut } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de check-out, baseado da regra de negócios de nosso sistema => AlternaReservaViewModel.cs (linha 117) -->
+
                             </VerticalStackLayout>
+
                         </Grid>
-                        <Label Text="{Binding DatasAviso}" FontSize="12" Opacity="0.7"/>
+                        
                     </VerticalStackLayout>
                 </DataTemplate>
+                
             </local:AlteraReservaTemplateSelector.DatasTemplate>
+            
         </local:AlteraReservaTemplateSelector>
+        
     </ContentPage.Resources>
 
    
@@ -120,14 +178,27 @@
         
         <!-- TÍTULO -->
         <VerticalStackLayout>
-            <Label Text="Alterar Hospedagem" FontSize="Title" HorizontalTextAlignment="Center"/>
-            <Label Text="{Binding Subtitulo}" FontSize="12" HorizontalTextAlignment="Center" Opacity="0.7"/>
+            <Label 
+                Text="Alterar Hospedagem"
+                FontSize="Title"
+                HorizontalTextAlignment="Center"/>
+            
+            <Label 
+                Text="{Binding Subtitulo}"
+                FontSize="12" 
+                HorizontalTextAlignment="Center"
+                Opacity="0.7"/>
+            <!-- { Binding Subtitulo } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de subtítulo => AlternaReservaViewModel.cs (linha 35) -->
+            
         </VerticalStackLayout>
 
         <!-- FRAME -->
         <Frame Grid.Row="1" Margin="0,12" Padding="16" HasShadow="True" CornerRadius="16">
 
             <controls:TemplateHost SeletorDeTemplate="{StaticResource AlteraReservaSelector}" />
+            <!-- controls:TemplateHost => Nosso controle customizado que criamos para suportar o TemplateSelector (/Controls/TemplateHost.cs) -->
+            <!-- {StaticResource AlteraReservaSelector}" => Vinculando o TemplateSelector que criamos em nossos Resources (/Controls/TemplateHost.cs linha 19) -->
+            
         </Frame>
 
         <!-- BOTÃO -->
@@ -137,5 +208,10 @@
                 IsEnabled="{Binding Btn_Pode_Confirmar }"
                 Margin="0,12,0,0"
                 HeightRequest="48" CornerRadius="12"/>
+        <!-- { Binding Btn_Confirmar } Utilizando a lógica de nosso ViewModel para alterar o texto de nosso Botão => AlternaReservaViewModel.cs (linha 126 & 232) -->
+        <!-- { Binding ConfirmCommand } Comando que será executado ao clicar no botão => AlternaReservaViewModel.cs (linha 163) -->
+        <!-- { Binding Btn_Pode_Confirmar } Utilizando a lógica de nosso ViewModel para habilitar ou desabilitar o botão => AlternaReservaViewModel.cs (linha 136 & 235) -->
+    
     </Grid>
+    
 </ContentPage>

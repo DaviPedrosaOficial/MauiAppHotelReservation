@@ -42,11 +42,11 @@ namespace MauiAppHotelReservation.ViewModels
         };
 
         // Opções de nosso Picker de escolha do que alterar na página de reservas
-        public ObservableCollection<string> OpcoesMenu { get; } =       // ObservableCollection para permitir atualizações dinâmicas em nossa UI
+        public ObservableCollection<string> OpcoesMenu { get; } =       // ObservableCollection para permitir atualizações dinâmicas em nossa UI (AlteraReserva.xaml linha 33)
             new(new[] { "Hospedes", "Quarto", "Data da estadia" });
 
         private string menuSelecionado;
-        public string MenuSelecionado                                   // Propriedade pública para vinculação de dados (binding em nossa UI
+        public string MenuSelecionado                                   // Propriedade pública para vinculação de dados (binding em nossa UI através do Picker {AlteraReserva.xaml linha 34})
         {
             get => menuSelecionado;
             set { menuSelecionado = value;                              // Pegando o valor selecionado atraves do Picker
