@@ -8,29 +8,31 @@ using System.Windows.Input;
 
 namespace MauiAppHotelReservation.ViewModels
 {
-    public enum TipoAlteracao { Menu, Hospedes, Quarto, Datas}
+    public enum TipoAlteracao { Menu, Hospedes, Quarto, Datas }         // Definindo os tipos de alteração possíveis na reserva
 
     public class AlteraReservaViewModel : BindableObject
     {
-        // Definindo o tipo de alteração como Menu por padrão
-        private TipoAlteracao estadoAtual = TipoAlteracao.Menu;
 
+        // <------------------------------------------------------ Propriedades para vinculação de dados (binding) e lógica de UI ------------------------------------------------------> //
+
+        private TipoAlteracao estadoAtual = TipoAlteracao.Menu;         // Definindo o tipo de alteração como Menu por padrão (definido no enum TipoAlteracao)
         public TipoAlteracao EstadoAtual
         {
             get => estadoAtual;
             set
             {
-                if (estadoAtual == value) return;
-                estadoAtual = value;
-                OnPropertyChanged();                // notifica EstadoAtual
-                OnPropertyChanged(nameof(Subtitulo)); // notifica Subtitulo também
-                AtualizarUI();
+                if (estadoAtual == value) return;                       // Previne loops infinitos de atualização, caso nada seja selecionado, o mesmo valor é atribuído, e set não fará nada
+
+                estadoAtual = value;                                    // Caso o valor seja diferente, atribui o novo valor
+                OnPropertyChanged();                                    // Avisa que a propriedade mudou          
+                OnPropertyChanged(nameof(Subtitulo));                   // Avisa que o subtítulo mudou (para atualizar o subtítulo da página)
+                AtualizarUI();                                          // Atualiza a UI (botão confirmar)
             }
         }
 
 
-        // Opções do menu
-        public string Subtitulo => EstadoAtual switch
+        // Opções do menu (Ficarão visíveis no subtítulo da página )
+        public string Subtitulo => EstadoAtual switch                   // Usando switch expression para definir o subtítulo baseado no estado atual, e criando uma propriedade para que o mesmo possa ser vinculada (binded) na UI, a depender do estado atual
         {
             TipoAlteracao.Menu => "O que você deseja alterar?",
             TipoAlteracao.Hospedes => "Quantidade de hospedes?",
@@ -39,39 +41,46 @@ namespace MauiAppHotelReservation.ViewModels
             _ => ""
         };
 
-
-
-        // Propriedades para vinculação de dados enquanto altera a reserva (Menu)
-        public ObservableCollection<string> OpcoesMenu { get; } = 
+        // Opções de nosso Picker de escolha do que alterar na página de reservas
+        public ObservableCollection<string> OpcoesMenu { get; } =       // ObservableCollection para permitir atualizações dinâmicas em nossa UI
             new(new[] { "Hospedes", "Quarto", "Data da estadia" });
 
         private string menuSelecionado;
-        public string MenuSelecionado
+        public string MenuSelecionado                                   // Propriedade pública para vinculação de dados (binding em nossa UI
         {
             get => menuSelecionado;
-            set { menuSelecionado = value; OnPropertyChanged(); AtualizarUI(); }
+            set { menuSelecionado = value;                              // Pegando o valor selecionado atraves do Picker
+                OnPropertyChanged();                                    // Avisa que a propriedade mudou
+                AtualizarUI();                                          // Atualiza a UI (botão confirmar)
+            }
         }
 
+        // Propriedades para vinculação de dados enquanto altera a reserva (Hóspedes adultos)
 
-
-
-        // Propriedades para vinculação de dados enquanto altera a reserva (Hóspedes)
-        private int qtdAdultos = 1;
-        public int NumeroAdultos
+        private int qtdAdultos = 1;                                     // Estabelece um valor padrão 1
+        public int NumeroAdultos                                        // Propriedade pública para vinculação de dados (binding em nossa UI)
         {
             get => qtdAdultos;
-            set { qtdAdultos = Math.Clamp(value, 1, 10); OnPropertyChanged(); AtualizarUI(); }
+            set { qtdAdultos = Math.Clamp(value, 1, 10);                // Recebendo o valor passado pelo nosso cliente pela UI, e garante que o mesmo fique entre 1 e 10
+                OnPropertyChanged();
+                AtualizarUI();
+            }
         }
 
-        private int qtdCriancas = 0;
-        public int NumeroCriancas
+        // Propriedades para vinculação de dados enquanto altera a reserva (Hóspedes crianças)
+
+        private int qtdCriancas = 0;                                    // Estabelece um valor padrão 0
+        public int NumeroCriancas                                       // Propriedade pública para vinculação de dados (binding em nossa UI)
         {
             get => qtdCriancas;
-            set { qtdCriancas = Math.Clamp(value, 0, 10); OnPropertyChanged(); AtualizarUI(); }
+            set { qtdCriancas = Math.Clamp(value, 0, 10);
+                OnPropertyChanged();
+                AtualizarUI();
+            }
         }
 
         // Definindo os quanto de hóspedes
-        public ObservableCollection<Quarto> TiposDeQuarto { get; } =
+        public ObservableCollection<Quarto> TiposDeQuarto { get; } =    // ObservableCollection que também nos permitirá atualizar dinâmicamente em nossa UI, possibilitando escolhar os tipos de quartos baseado em nossa classe Quarto
             new(new[]
             {
                 new Quarto { Descrição = "Suíte Presidencial", ValorDiariaAdulto = 600, ValorDiariaCriança = 300 },
@@ -81,97 +90,110 @@ namespace MauiAppHotelReservation.ViewModels
             });
 
         private Quarto quartoSelecionado;
-        public Quarto TipoDeQuartoSelecionado
+        public Quarto TipoDeQuartoSelecionado                           // Propriedade pública para vinculação de dados (binding em nossa UI)
         {
             get => quartoSelecionado;
             set { 
                 if(value == null) return;
+                
                 quartoSelecionado = value;
                 OnPropertyChanged();
-                AtualizarUI(); 
+                AtualizarUI();
             }
         }
 
-
-
         // Propriedades para vinculação de dados enquanto altera a reserva (Datas)
-        private DateTime checkIn = DateTime.Today;
-        public DateTime CheckIn
+
+        private DateTime checkIn = DateTime.Today;                      // Previne que reservas sejam feitas para datas passadas
+        public DateTime CheckIn                                         // Propriedade pública para vinculação de dados (binding em nossa UI)
         {
             get => checkIn;
-            set { checkIn = value; OnPropertyChanged(); AtualizarUI(); }
+            set { checkIn = value;
+                OnPropertyChanged();
+                AtualizarUI();
+            }
         }
-        private DateTime checkOut = DateTime.Today.AddDays(1);
-        public DateTime CheckOut
+        private DateTime checkOut = DateTime.Today.AddDays(1);          // Previne que reservas sejam feitas para datas passadas, e garante que o check-out seja no mínimo 1 dia após o check-in
+        public DateTime CheckOut                                        // Propriedade pública para vinculação de dados (binding em nossa UI)
         {
             get => checkOut;
             set { checkOut = value; OnPropertyChanged(); AtualizarUI(); }
         }
 
-
-
-
         //Botão de confirmação
-        private string btn_confirmar = "Confirmar";
-        public string Btn_Confirmar
+
+        private string btn_confirmar = "Confirmar";                     // Texto padrão do botão
+        public string Btn_Confirmar                                     // Propriedade pública para vinculação de dados (binding em nossa UI)
         {
             get => btn_confirmar;
-            set { btn_confirmar = value; OnPropertyChanged(); }
+            set { btn_confirmar = value;
+                OnPropertyChanged();
+            }
         }
 
         // Habilita ou desabilita o botão de confirmação
         private bool btn_pode_confirmar;
-        public bool Btn_Pode_Confirmar
+        public bool Btn_Pode_Confirmar                                  // Propriedade pública para vinculação de dados (binding em nossa UI)
         {
             get => btn_pode_confirmar;
-            set { btn_pode_confirmar = value; OnPropertyChanged(); }
+            set { btn_pode_confirmar = value;
+                OnPropertyChanged();
+            }
         }
 
+        
+        public ICommand ConfirmCommand { get; }                         // Criando o comando para o botão Confirmar/Salvar Alterações, atraves da interface ICommand que possibilita a criação de comandos para botões em MVVM
 
-        // Comandos para os botões
-        public ICommand ConfirmCommand { get; }
 
-        // Referência à reserva do cliente que está sendo alterada
-        private readonly object reservaDoCliente;
+        private readonly object reservaDoCliente;                       // Criando um objeto para armazenar a reserva do cliente que será alterada
 
-        public AlteraReservaViewModel(object reserva)
+
+        // <------------------------------------------------------ Fim das propriedades para vinculação de dados (binding) e lógica de UI ------------------------------------------------------> //
+
+        // <------------------------------------------------------------------------------ Construtor ------------------------------------------------------------------------------------------> //
+
+        public AlteraReservaViewModel(object reserva)                   // Construtor que recebe a reserva a ser alterada
         {
-            reservaDoCliente = reserva;
-            quartoSelecionado = TiposDeQuarto.First();
-            AtualizarUI();
+            reservaDoCliente = reserva;                                 // Armazena a reserva selecionada pelo cliente em nosso objeto reservaDoCliente, para que futuras alterações possam ser aplicadas a ela 
+            quartoSelecionado = TiposDeQuarto.First();                  // Define um quarto padrão para evitar problemas de null reference
+            AtualizarUI();                                              // Atualiza a UI inicialmente, para garantir que o botão esteja no estado correto
 
 
-            // Comando para o botão Confirmar/Salvar Alterações
-            ConfirmCommand = new Command(async () =>
+
+            ConfirmCommand = new Command(async () =>                    // Definindo a ação do comando ConfirmCommand, que é assíncrona para evitar travamentos na UI
             {
-                switch (estadoAtual)
+                switch (estadoAtual)                                    // Verifica o estado atual para determinar a ação a ser tomada, baseado no estado atual (Menu, Hóspedes, Quarto, Datas)
                 {
-                    case TipoAlteracao.Menu:
+                    case TipoAlteracao.Menu:                            // Se estiver no menu, verifica o que foi selecionado e muda o estado atual para o próximo passo
+                        
                         if (MenuSelecionado == "Hospedes")
                             EstadoAtual = TipoAlteracao.Hospedes;
+                        
                         else if (MenuSelecionado == "Quarto")
                             EstadoAtual = TipoAlteracao.Quarto;
+                        
                         else if (MenuSelecionado == "Data da estadia")
                             EstadoAtual = TipoAlteracao.Datas;
-                        MenuSelecionado = null; // Reseta a seleção do menu
+                        
                         break;
 
 
-                    case TipoAlteracao.Hospedes:
-                        if (reservaDoCliente is Models.Hospedagem reservaH)
+                    case TipoAlteracao.Hospedes:                                                                                    // Se estiver alterando hóspedes, aplica as alterações e volta para a página de reservas
+                        
+                        if (reservaDoCliente is Models.Hospedagem reservaH)                                                         // Verifica se o objeto reservaDoCliente é do tipo Hospedagem antes de aplicar as alterações
                         {
-                            reservaH.QuantidadeAdultos = NumeroAdultos;
-                            reservaH.QuantidadeCriancas = NumeroCriancas;
+                            reservaH.QuantidadeAdultos = NumeroAdultos;                                                             // Aplica a quantidade de adultos selecionada para alteração em nossa UI, na reserva do cliente
+                            reservaH.QuantidadeCriancas = NumeroCriancas;                                                           // Aplica a quantidade de crianças selecionada para alteração em nossa UI, na reserva do cliente
                         }
-                        await App.Current.MainPage.DisplayAlert("Sucesso", "Número de hóspedes alterado com sucesso!", "OK");
-                        EstadoAtual = TipoAlteracao.Menu;
+                        
+                        await App.Current.MainPage.DisplayAlert("Sucesso", "Número de hóspedes alterado com sucesso!", "OK");       // Exibe uma mensagem de sucesso para o usuário
+                        EstadoAtual = TipoAlteracao.Menu;                                                                           // Volta para o menu principal após a alteração
 
-                        await Task.Delay(500); // Pequeno delay para melhor experiência do usuário
-                        await App.Current.MainPage.Navigation.PushAsync(new Views.Hotel.ReservasHospedagem()); // Volta para a página anterior
+                        await App.Current.MainPage.Navigation.PushAsync(new Views.Hotel.ReservasHospedagem());                      // Volta para a página de reservas
                         break;
 
 
-                    case TipoAlteracao.Quarto:
+                    case TipoAlteracao.Quarto:                                                                                      // Se estiver alterando o tipo de quarto, aplica as alterações e volta para a página de reservas
                         if (reservaDoCliente is Models.Hospedagem reservaQ)
                         {
                             reservaQ.QuartoSelecionado = TipoDeQuartoSelecionado;
@@ -179,12 +201,11 @@ namespace MauiAppHotelReservation.ViewModels
                         await App.Current.MainPage.DisplayAlert("Sucesso", "Tipo de quarto alterado com sucesso!", "OK");
                         EstadoAtual = TipoAlteracao.Menu;
 
-                        await Task.Delay(500); // Pequeno delay para melhor experiência do usuário
-                        await App.Current.MainPage.Navigation.PushAsync(new Views.Hotel.ReservasHospedagem()); // Volta para a página anterior
+                        await App.Current.MainPage.Navigation.PushAsync(new Views.Hotel.ReservasHospedagem());
                         break;
 
 
-                    case TipoAlteracao.Datas:
+                    case TipoAlteracao.Datas:                                                                                       // Se estiver alterando as datas, aplica as alterações e volta para a página de reservas
                         if (reservaDoCliente is Models.Hospedagem reservaD)
                         {
                             reservaD.DataCheckIn = CheckIn;
@@ -193,28 +214,31 @@ namespace MauiAppHotelReservation.ViewModels
                         await App.Current.MainPage.DisplayAlert("Sucesso", "Datas alteradas com sucesso!", "OK");
                         EstadoAtual = TipoAlteracao.Menu;
 
-                        await Task.Delay(500); // Pequeno delay para melhor experiência do usuário
-                        await App.Current.MainPage.Navigation.PushAsync(new Views.Hotel.ReservasHospedagem()); // Volta para a página anterior
+                        await App.Current.MainPage.Navigation.PushAsync(new Views.Hotel.ReservasHospedagem());
                         break;
                 }
             });
         }
 
+        // <------------------------------------------------------ Fim do Construtor ------------------------------------------------------> //
+
+        // <------------------------------------------------------ Método auxiliar ------------------------------------------------------> //
+
 
         // Propriedades para vinculação de dados enquanto altera a reserva
         private void AtualizarUI()
         {
-            // Texto do botão por passo
+            // Texto do botão por passo (se == Menu, "Confirmar", senão "Salvar alterações")
             Btn_Confirmar = estadoAtual == TipoAlteracao.Menu ? "Confirmar" : "Salvar alterações";
 
             // Validações por passo
-            Btn_Pode_Confirmar = estadoAtual switch
+            Btn_Pode_Confirmar = estadoAtual switch                                             // Usando switch expression para definir se o botão pode ser clicado ou não, baseado no estado atual e nas validações necessárias
             {
-                TipoAlteracao.Menu => !string.IsNullOrWhiteSpace(MenuSelecionado),
-                TipoAlteracao.Hospedes => NumeroAdultos >=  1 && NumeroCriancas >= 0,
-                TipoAlteracao.Quarto => quartoSelecionado != null,
-                TipoAlteracao.Datas => CheckOut > CheckIn,
-                _ => false
+                TipoAlteracao.Menu => !string.IsNullOrWhiteSpace(MenuSelecionado),              // Verifica se algo foi selecionado no menu
+                TipoAlteracao.Hospedes => NumeroAdultos >=  1 && NumeroCriancas >= 0,           // Verifica se a quantidade de adultos é pelo menos 1 e a de crianças é 0 ou mais
+                TipoAlteracao.Quarto => quartoSelecionado != null,                              // Verifica se um quarto foi selecionado
+                TipoAlteracao.Datas => CheckOut > CheckIn,                                      // Verifica se a data de check-out é maior que a de check-in
+                _ => false                                                                      // Caso nenhum dos casos anteriores seja atendido, desabilita o botão
             };
         }
     }
