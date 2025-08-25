@@ -57,46 +57,58 @@
                             FontAttributes="Bold"/>
 
                         <!-- Adultos -->
-                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="0,8,0,0">
+                        <Grid ColumnDefinitions="Auto,Auto,Auto" 
+                              Padding="0,8,0,0"
+                              VerticalOptions="Center">
                             
                             <Label 
                                 Text="Adultos:" 
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                Margin="0,0,30,0"/>
                             
-                            <Stepper Grid.Column="1" 
+                            <Label 
+                                   Grid.Column="1" 
+                                   Text="{Binding NumeroAdultos}"
+                                   VerticalOptions="Center"
+                                   Margin="50,0,25,0"/>
+                            <!-- { Binding NumeroAdultos } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de adultos, baseado da regra de negócios de nosso sistema => AlternaReservaViewModel.cs (linha 61) -->
+                            
+                            <Stepper Grid.Column="2" 
                                      Minimum="1" 
                                      Maximum="10" 
                                      Increment="1"
+                                     Margin="50,0"
                                     Value="{Binding NumeroAdultos}" />
                             <!-- { Binding NumeroAdultos } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de adultos, baseado da regra de negócios de nosso sistema => AlternaReservaViewModel.cs (linha 61) -->
 
-                            <Label 
-                                   Grid.Column="2" 
-                                   Text="{Binding NumeroAdultos}"
-                                   VerticalOptions="Center"/>
-                            <!-- { Binding NumeroAdultos } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de adultos, baseado da regra de negócios de nosso sistema => AlternaReservaViewModel.cs (linha 61) -->
-                            
                         </Grid>
 
                         <!-- Crianças -->
-                        <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Grid ColumnDefinitions="Auto,Auto,Auto"
+                              Padding="0,8,0,0"
+                              VerticalOptions="Center">
                             
                             <Label 
                                 Text="Crianças:"
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                Margin="0,0,30,0"/>
                             
-                            <Stepper Grid.Column="1"
-                                     Minimum="0" 
-                                     Maximum="10"
-                                     Increment="1"
-                                     Value="{Binding NumeroCriancas}" />
-                            <!-- { Binding NumeroCriancas } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de adultos, baseado da regra de negócios de nosso sistema => AlternaReservaViewModel.cs (linha 73) -->
                             
-                            <Label Grid.Column="2"
+                            <Label Grid.Column="1"
                                    Text="{Binding NumeroCriancas}"
-                                   VerticalOptions="Center"/>
+                                   VerticalOptions="Center"
+                                   Margin="50,0,25,0"/>
+                            
                             <!-- { Binding NumeroCriancas } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de adultos, baseado da regra de negócios de nosso sistema => AlternaReservaViewModel.cs (linha 73) -->
-
+                            
+                            <Stepper Grid.Column="2"
+                                    Minimum="0" 
+                                    Maximum="10"
+                                    Increment="1"
+                                    Margin="50,0"
+                                    Value="{Binding NumeroCriancas}" />
+                            <!-- { Binding NumeroCriancas } Utilizando a lógica de nosso ViewModel para vincular o valor desejado de adultos, baseado da regra de negócios de nosso sistema => AlternaReservaViewModel.cs (linha 73) -->
+                            
                         </Grid>
                     </VerticalStackLayout>
                 </DataTemplate>
