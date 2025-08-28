@@ -16,7 +16,7 @@
 
  Todo o projeto foi desenvolvido utilizando o padrão MVVM (Model-View-ViewModel), que é amplamente utilizado em aplicações .NET MAUI para separar a lógica de negócios da interface do usuário.
 
- Por fim, o projeto conta também com comentários explicativos em seu código-fonte para facilitar o entendimento das funcionalidades implementadas e tornar a compreensão do mesmo mais acessível para outros desenvolvedores que possam vir a trabalhar no projeto futuramente.
+ Por fim, o projeto conta também com comentários explicativos em seu código-fonte para facilitar o entendimento das funcionalidades implementadas e tornar a compreensão do mesmo, mais acessível para outros desenvolvedores que possam vir a trabalhar no projeto futuramente.
 
  ### Requisitos
 
@@ -67,6 +67,26 @@
    <br>
    <br>
    No ViewModels encontraremos a classe AlteraReservaViewModel, onde é criado uma parte base para o ContentView, nela estão contidos alguns comandos e propriedades que auxiliarão no Binding de nossa página de reservas do usuário.
+   <br>
+   <br>
+   > Views
+   <br>
+   <br>
+   Em nossa pasta Views, teremos 2 subpastas, Hotel & Login:
+   <br>
+   <br>
+   -> Hotel: Onde estão contidas as páginas principais de nosso projeto, e a lógica de navegação entre as mesmas, além disso, aqui se localiza as páginas ReservasHospedagem & AlteraReserva que utilizam da lógica de nosso TemplateSelector.
+   <br>
+   <br>
+   -> Login: Onde estão contidas as páginas de Login & Cadastro, herdadas de nosso projeto de <a href="https://github.com/DaviPedrosaOficial/MauiAppLogin/edit/master/README.md">login</a>.
+   <br>
+   <br>
+   > Extras
+   <br>
+   <br>
+   Além das pastas citadas, mantive a estrutura padrão de um projeto .MAUI, mantendo os arquivos chave do projeto, fora de pastas (App.xaml,App.Shell,..) mas alterações foram feitas nas mesmas, e aconselho que sigam os comentários para uma melhor compreensão.
+   <br>
+   <br>
    <li><b>Utilização na prática (janelas do projeto) :</b>
 
    Ao pedirmos a nossa IDE para rodar o projeto, ela irá abrir uma janela de Login, onde você poderá utilizar os seguintes usuários já cadastrados:
@@ -82,7 +102,14 @@
    Além disso, em nossa tela de Login, você encontrará um botão 'Cadastrar', onde ao clicar, será direcionado a tela de Cadastro, onde poderá cadastrar novos usuários para o sistema, onde ao cadastrar-se, automaticamente será direcionado a tela 'protegida'.
    <br>
    <br>
-   E por fim, o nosso projeto conta também com algumas condições de erro, como por exemplo, caso o usuário não exista, ou a senha esteja incorreta, o sistema irá acusar o erro e não permitirá o acesso ao sistema. Buscando sempre manter a segurança do sistema.
+   Após logar, você será direcionado a tela principal do sistema (MainPage), onde encontrará as seguintes opções:
+   <br>
+   <br>
+   -> Minhas Reservas: Onde você poderá visualizar as reservas já feitas, editar ou excluir as mesmas (porém, caso você não tenha reserva cadastrada, a mesma não se abrirá. Estou tentando resolver o problema, se souber como ajudar, ficarei muito grato :) ).
+   <br>
+   -> Reservar estadia: Onde você poderá fazer uma nova reserva, escolhendo o quarto, data de entrada e saída e a quantidade de hospedes.
+   <br>
+   -> Deslogar: Onde você poderá deslogar do sistema, sendo redirecionado a tela de Login novamente.
  </ol>
 
  Outro ponto interessante de nosso projeto se diz respeito a sua portabilidade, uma vez que o mesmo foi desenvolvido utilizando o .MAUI, ele pode ser executado em diversas plataformas, como Windows, MacOS, Android e iOS, sem a necessidade de grandes alterações no código.
@@ -96,20 +123,38 @@
  Tela de Login:
  <br>
  <br>
- <img src="MauiAppLogin/Resources/Images/tela_login.png" alt="Tela de Login do projeto" width="400"/>
+ <img src="MauiAppHotelReservation/Resources/Images/TelaDeLogin.png" alt="Tela de Login do projeto" width="400"/>
  <br>
  <br>
  Tela de Cadastro:
  <br>
  <br>
- <img src="MauiAppLogin/Resources/Images/tela_cadastro.png" alt="Tela de Cadastro do projeto" width="400"/>
+ <img src="MauiAppHotelReservation/Resources/Images/TelaDeCadastro.png" alt="Tela de Cadastro do projeto" width="400"/>
  <br>
  <br>
- Tela Protegida (após login):
+ Tela Principal (após login):
  <br>
  <br>
- <img src="MauiAppLogin/Resources/Images/tela_protegida.png" alt="Tela Protegida do projeto" width="400"/>
-
+ <img src="MauiAppHotelReservation/Resources/Images/PaginaPrincipal.png" alt="Main Page de nosso projeto" width="400"/>
+ <br>
+ <br>
+ Tela Reservar estádia:
+ <br>
+ <br>
+ <img src="MauiAppHotelReservation/Resources/Images/PaginaDeReserva.png" alt="Tela que nos permite criar uma reserva em nosso projeto" width="400"/>
+ <br>
+ <br>
+ Tela Confirmação de reserva:
+ <br>
+ <br>
+ <img src="MauiAppHotelReservation/Resources/Images/ConfirmacaoDeReserva.png" alt="Tela onde demonstra a sua reserva após confirmação" width="400"/>
+ <br>
+ <br>
+ Tela Minhas Reservas:
+ <br>
+ <br>
+ <img src="MauiAppHotelReservation/Resources/Images/Minhasreservas.png" alt="Tela que contém as reservas do cliente" width="400"/>
+ 
  ## Considerações finais
 
  Lembrando mais uma vez que o projeto é um exemplo básico de como utilizar o .MAUI, e não possui uma lógica de negócio complexa, portanto, sinta-se livre para alterá-lo como desejar.
