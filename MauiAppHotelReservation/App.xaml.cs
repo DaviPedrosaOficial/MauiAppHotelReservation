@@ -2,6 +2,7 @@
 
 namespace MauiAppHotelReservation
 {
+    // Comentario para linka SolarQube
     public partial class App : Application
     {
         //Simulando um banco de dados com uma lista de quartos (Regra de negócio)
